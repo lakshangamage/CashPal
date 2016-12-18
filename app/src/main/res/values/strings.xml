@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">CashPal</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="Complete">Success</string>
+    <string name="Error">Failed</string>
+</resources>
