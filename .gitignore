@@ -1,0 +1,16 @@
+# Created by .ignore support plugin (hsz.mobi)
+.gitignore
+.gradle/
+.idea/
+CashPal.iml
+CashPal2.iml
+app/.gitignore
+app/app.iml
+app/libs/
+app/src/androidTest/
+app/src/test/
+build/
+gradle/wrapper/gradle-wrapper.jar
+gradlew
+gradlew.bat
+local.properties

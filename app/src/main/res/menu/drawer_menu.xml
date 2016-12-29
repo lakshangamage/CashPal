@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/home_drawer_menu"
+            android:title="Accounts"
+            android:icon="@drawable/account"
+            android:onClick="jumptohome">
+            >
+        </item>
+        <item android:id="@+id/friends_drawer_menu"
+            android:title="Add Account"
+            android:icon="@drawable/add_account"
+            android:onClick="jumptoaddaccout">
+        </item>
+        <!--<item android:id="@+id/checkin_drawer_menu"-->
+        <!--android:title="Check Ins"-->
+        <!--android:icon="@drawable/checkinicon">-->
+        <!--</item>-->
+        <item android:id="@+id/events_drawer_menu"
+            android:title="Chancge Language"
+            android:icon="@drawable/change_lang_icon"
+            android:onClick="jumptogroups">
+        </item>
+        <item android:id="@+id/logout_drawer_menu"
+            android:title="Log Out"
+            android:icon="@drawable/log_out_icon"
+            android:onClick="logout">
+        </item>
+    </group>
+
+
+</menu>

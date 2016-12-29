@@ -1,4 +1,4 @@
-package com.intelligentz.cashpal.cashpal;
+package com.intelligentz.cashpal.cashpal.adaptor;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

@@ -1,18 +1,21 @@
-package com.intelligentz.cashpal.cashpal;
+package com.intelligentz.cashpal.cashpal.view;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
+
 import com.andexert.library.RippleView;
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
+import com.intelligentz.cashpal.cashpal.model.HttpClient;
+import com.intelligentz.cashpal.cashpal.R;
+import com.intelligentz.cashpal.cashpal.model.Strings;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.rengwuxian.materialedittext.validation.RegexpValidator;
@@ -33,6 +36,7 @@ public class CustomerTopUp extends Fragment {
     Button topupbrn;
     RippleView rippleView;
     SweetAlertDialog progressDialog;
+    TextView titleText;
 
     public CustomerTopUp() {
         // Required empty public constructor
@@ -51,8 +55,12 @@ public class CustomerTopUp extends Fragment {
         mobileTxt = (MaterialEditText) view.findViewById(R.id.mobileTxt);
         amountTxt = (MaterialEditText) view.findViewById(R.id.amountTxt);
         topupbrn = (Button) view.findViewById(R.id.topupbtn);
+        titleText = (TextView) view.findViewById(R.id.titleTxt);
         rippleView = (RippleView) view.findViewById(R.id.rippleView);
-        mobileTxt.addValidator(new RegexpValidator("Invalid","07\\d{8}"));
+        mobileTxt.addValidator(new RegexpValidator(Strings.getInvalidText(),"07\\d{8}"));
+        rippleView.setRippleDuration(100);
+        rippleView.setRippleColor(R.color.colorAccent);
+        rippleView.setRippleAlpha(300);
         rippleView.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
 
             @Override
@@ -61,9 +69,37 @@ public class CustomerTopUp extends Fragment {
             }
 
         });
+        setText();
         return view;
     }
 
+    private void setText(){
+        titleText.setText(Strings.getCustomerTopUpTitle());
+        pinTxt.setHint(Strings.getAgentPinTextHint());
+        mobileTxt.setHint(Strings.getMobileTextHint());
+        amountTxt.setHint(Strings.getAmountTextHint());
+        topupbrn.setText(Strings.getTopUpButtonText());
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        YoYo.with(Techniques.FlipInX)
+                .duration(1200)
+                .playOn(view.findViewById(R.id.titleTxt));
+        YoYo.with(Techniques.FlipInX)
+                .duration(1200)
+                .playOn(view.findViewById(R.id.pinTxt));
+        YoYo.with(Techniques.FlipInX)
+                .duration(1200)
+                .playOn(view.findViewById(R.id.mobileTxt));
+        YoYo.with(Techniques.FlipInX)
+                .duration(1200)
+                .playOn(view.findViewById(R.id.amountTxt));
+        YoYo.with(Techniques.FlipInX)
+                .duration(1200)
+                .playOn(view.findViewById(R.id.topupbtn));
+    }
 
     public void topup(){
         if (pinTxt.getText() == null || pinTxt.getText().toString().isEmpty()) return;
@@ -79,18 +115,19 @@ public class CustomerTopUp extends Fragment {
         };
 
         progressDialog = new SweetAlertDialog(getContext(), SweetAlertDialog.WARNING_TYPE);
-        progressDialog.setTitleText("Submit Transaction?");
-        progressDialog.setContentText("Customer: " + mobileTxt.getText().toString()+ "\nAmount: " + amountTxt.getText().toString() );
-        progressDialog.setCancelText("No");
-        progressDialog.setConfirmText("Yes");
+        progressDialog.setTitleText(Strings.getSubmitTransactionWarningDialogTitle());
+        progressDialog.setContentText(String.format(Strings.getSubmitTransactionWarningDialogBody(),
+                mobileTxt.getText().toString(), amountTxt.getText().toString()));
+        progressDialog.setCancelText(Strings.getNoText());
+        progressDialog.setConfirmText(Strings.getYesText());
         progressDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
             @Override
             public void onClick(SweetAlertDialog sweetAlertDialog) {
-                sweetAlertDialog.setTitleText("Processing Request...")
-                        .setContentText("This might take few seconds.")
-                        .setCancelText("Cancel")
+                sweetAlertDialog.setTitleText(Strings.getSubmitTransactionProcessingDialogTitle())
+                        .setContentText(Strings.getSubmitTransactionProcessingDialogBody())
+                        .setCancelText(Strings.getCancelText())
                         .setCancelClickListener(cancelListener);
-                sweetAlertDialog.getProgressHelper().setBarColor(getResources().getColor(R.color.colorPrimaryDark));
+                sweetAlertDialog.getProgressHelper().setBarColor(R.color.colorPrimaryDark);
                 sweetAlertDialog.changeAlertType(SweetAlertDialog.PROGRESS_TYPE);
                 sendHttpRequest(sweetAlertDialog);
             }
@@ -118,18 +155,18 @@ public class CustomerTopUp extends Fragment {
             HttpClient.post(getContext(), "topup", entity, HttpClient.CONTENT_TYPE_JSON, new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                    sweetAlertDialog.setTitleText("Success!")
-                    .setContentText("Your transaction request sent successfully.")
-                    .setConfirmText("OK")
+                    sweetAlertDialog.setTitleText(Strings.getSuccessText())
+                    .setContentText(Strings.getSubmitTransactionSuccessDialogBody())
+                    .setConfirmText(Strings.getOkText())
                     .setConfirmClickListener(successListener)
                     .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
                 }
 
                 @Override
                 public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                    sweetAlertDialog.setTitleText("Failed!")
-                            .setContentText("Something went wrong. Please try again.")
-                            .setConfirmText("OK")
+                    sweetAlertDialog.setTitleText(Strings.getFailedText())
+                            .setContentText(Strings.getSubmitTransactionFailureDialogBody())
+                            .setConfirmText(Strings.getOkText())
                             .setConfirmClickListener(successListener)
                             .changeAlertType(SweetAlertDialog.ERROR_TYPE);
                 }

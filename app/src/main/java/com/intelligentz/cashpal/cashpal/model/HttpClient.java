@@ -1,4 +1,4 @@
-package com.intelligentz.cashpal.cashpal;
+package com.intelligentz.cashpal.cashpal.model;
 
 import android.content.Context;
 
