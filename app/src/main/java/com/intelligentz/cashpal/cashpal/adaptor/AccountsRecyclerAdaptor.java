@@ -53,8 +53,8 @@ public class AccountsRecyclerAdaptor extends RecyclerView.Adapter<AccountsRecycl
     public void removeItem(int position){
         AccountDetail newAccount = accountList.get(position);
 
-        if (json != null && !json.isEmpty()) {
-            Account.setCurrentSubAccountList(gson.fromJson(json, ArrayList.class));
+        if (newAccount.getSubAccoutList() != null && !newAccount.getSubAccoutList().isEmpty()) {
+            Account.setCurrentAccount(newAccount);
         } else {
             String msg = "You have no " + newAccount.getAccountName() + " account added.";
             NiftyNotificationView.build(activity, msg, Effects.thumbSlider,R.id.mLyout)
@@ -62,15 +62,14 @@ public class AccountsRecyclerAdaptor extends RecyclerView.Adapter<AccountsRecycl
             return;
         }
         Account.setCurrentSubAccountIndex(0);
-        for (int i = 0; i < Account.getCurrentSubAccountList().size(); i++){
-            if (Account.getCurrentActiveSubAccountList().contains(Account.getCurrentSubAccountList().get(i))) {
+        for (int i = 0; i < newAccount.getSubAccoutList().size(); i++){
+            if (Account.getCurrentActiveSubAccountList().contains(newAccount.getSubAccoutList().get(i))) {
                 Account.setCurrentSubAccountIndex(i);
                 break;
             }
         }
         accountList.remove(position);
         accountList.add(newAccount);
-        Account.setCurrentAccount(newAccount, context);
         notifyItemRemoved(position);
         notifyItemRangeChanged(position,accountList.size()-1);
         activity.update();

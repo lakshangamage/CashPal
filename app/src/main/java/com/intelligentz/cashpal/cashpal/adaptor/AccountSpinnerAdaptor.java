@@ -25,7 +25,7 @@ public class AccountSpinnerAdaptor extends BaseAdapter {
     }
     @Override
     public int getCount() {
-        return 0;
+        return Account.accountDetailList.size();
     }
 
     @Override
@@ -52,7 +52,8 @@ public class AccountSpinnerAdaptor extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) itemView.getTag();
         }
-        viewHolder.imageView.setBackgroundResource(Account.accountDetailList.get(i).getAccountIcon());
+        viewHolder.imageView.setImageResource(Account.accountDetailList.get(i).getAccountIcon());
+        viewHolder.accountNameTxt.setText(Account.accountDetailList.get(i).getAccountName());
         return itemView;
     }
 

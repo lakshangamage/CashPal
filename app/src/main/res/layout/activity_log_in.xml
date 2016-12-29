@@ -10,13 +10,26 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:gravity="center_horizontal"
     tools:context="com.intelligentz.cashpal.cashpal.view.LogInActivity">
-   <Spinner
+   <RelativeLayout
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
-       android:prompt="Account Type"
+       android:id="@+id/logolayout"
+       android:gravity="center_horizontal">
+
+    <ImageView
+       android:layout_width="200dp"
+       android:layout_height="200dp"
+       android:src="@drawable/cashpal"
+       android:id="@+id/cashpal"/>
+   </RelativeLayout>
+    <Spinner
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:prompt="@string/spinner_prompt"
        android:spinnerMode="dialog"
        android:gravity="center_horizontal"
        android:id="@+id/spinner"
+        android:layout_below="@id/logolayout"
        android:layout_marginBottom="25dp"/>
 
     <com.rengwuxian.materialedittext.MaterialEditText
