@@ -22,6 +22,13 @@ public class Strings {
     protected static String INVALID_TEXT;
     protected static String SUBMIT_TRANSACTION_SUCCESS_DIALOG_BODY;
     protected static String SUBMIT_TRANSACTION_FAILURE_DIALOG_BODY;
+    protected static String LOG_IN_SPINNER_PROMPT;
+    protected static String LOG_IN_PROCESSING_TITLE;
+    protected static String LOG_IN_TEXT;
+    protected static String VERIFY_TEXT;
+    protected static String VERIFY_PROCESSING_TITLE;
+    protected static String PIN_VERIFICATION_FALIURE_DIALOG_BODY;
+    protected static String PROCEED_TEXT;
 
     static {
         English.setLanguage();
@@ -44,6 +51,10 @@ public class Strings {
 
     public static String getAmountTextHint() {
         return AMOUNT_TEXT_HINT;
+    }
+
+    public static String getLogInSpinnerPrompt() {
+        return LOG_IN_SPINNER_PROMPT;
     }
 
     public static String getSubmitTransactionWarningDialogTitle() {
@@ -94,8 +105,32 @@ public class Strings {
         return SUBMIT_TRANSACTION_FAILURE_DIALOG_BODY;
     }
 
+    public static String getLogInText() {
+        return LOG_IN_TEXT;
+    }
+
     public static String getInvalidText() {
         return INVALID_TEXT;
+    }
+
+    public static String getLogInProcessingTitle() {
+        return LOG_IN_PROCESSING_TITLE;
+    }
+
+    public static String getVerifyProcessingTitle() {
+        return VERIFY_PROCESSING_TITLE;
+    }
+
+    public static String getPinVerificationFaliureDialogBody() {
+        return PIN_VERIFICATION_FALIURE_DIALOG_BODY;
+    }
+
+    public static String getProceedText() {
+        return PROCEED_TEXT;
+    }
+
+    public static String getVerifyText() {
+        return VERIFY_TEXT;
     }
 
     public static class English {
@@ -118,6 +153,13 @@ public class Strings {
             Strings.INVALID_TEXT = "Invalid";
             Strings.SUBMIT_TRANSACTION_SUCCESS_DIALOG_BODY = "Your transaction request sent successfully.";
             Strings.SUBMIT_TRANSACTION_FAILURE_DIALOG_BODY = "Something went wrong. Please try again.";
+            Strings.LOG_IN_SPINNER_PROMPT = "Account Type";
+            Strings.LOG_IN_PROCESSING_TITLE = "Loging In...";
+            Strings.LOG_IN_TEXT = "Log In";
+            Strings.VERIFY_TEXT = "Verify";
+            Strings.VERIFY_PROCESSING_TITLE = "Verifying...";
+            Strings.PIN_VERIFICATION_FALIURE_DIALOG_BODY = "Some thing went wrong. Please check your pin and try again";
+            Strings.PROCEED_TEXT = "Proceed";
         }
     }
 
@@ -141,6 +183,13 @@ public class Strings {
             Strings.INVALID_TEXT = "වැරදියි";
             Strings.SUBMIT_TRANSACTION_SUCCESS_DIALOG_BODY = "ඔබේ ඉල්ලීම සාර්ථකව යොමු කෙරින ලදී.";
             Strings.SUBMIT_TRANSACTION_FAILURE_DIALOG_BODY = "කරුණාකර නැවත උත්සාහ කරන්න.";
+            Strings.LOG_IN_SPINNER_PROMPT = "මුදල් වර්ගය";
+            Strings.LOG_IN_PROCESSING_TITLE = "සම්බන්ධ කරමින්...";
+            Strings.LOG_IN_TEXT = "ඇතුල් වන්න";
+            Strings.VERIFY_TEXT = "තහවුරු කරන්න";
+            Strings.VERIFY_PROCESSING_TITLE = "තහවුරු කරමින්...";
+            Strings.PIN_VERIFICATION_FALIURE_DIALOG_BODY = "කරුණාකර ඔබේ කේතය නැවත පරීක්ෂා කරන්න.";
+            Strings.PROCEED_TEXT = "ඉදිරියට ";
         }
     }
 

@@ -48,29 +48,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initUI();
-        loadAccounts();
         configureDrawer();
         update();
     }
 
-    private void loadAccounts() {
-        for (int i=0; i<Account.accountDetailList.size(); i++) {
-            AccountDetail acc = Account.accountDetailList.get(i);
-            SharedPreferences mPrefs = context.getSharedPreferences(acc.getAccount_id(), Context.MODE_PRIVATE);
-            Gson gson = new Gson();
-            String json = mPrefs.getString(Account.SUB_ACCOUNT_IDENTIFIER, "");
-            if (json != null && !json.isEmpty()) {
-                ArrayList<String> persistedList = gson.fromJson(json, ArrayList.class);
-                if (persistedList != null && !persistedList.isEmpty()) {
-                    acc.getSubAccoutList().clear();
-                    for (String id : persistedList) {
-                        acc.addSubAccountToList(id);
-                    }
-                }
-            }
-            Account.setCurrentAccount(acc);
-        }
-    }
+
 
     private void initUI() {
         final ViewPager viewPager = (ViewPager) findViewById(R.id.vp_vertical_ntb);

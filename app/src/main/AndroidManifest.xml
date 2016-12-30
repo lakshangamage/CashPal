@@ -12,13 +12,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:icon">
-        <activity android:name=".view.MainActivity">
+        <activity android:name=".view.MainActivity" />
+        <activity android:name=".view.LogInActivity"></activity>
+        <activity android:name=".view.OTPValidationActivity" />
+        <activity android:name=".view.LanguageSelectionActivity">
 
         </activity>
-        <activity android:name=".view.LogInActivity">
+        <activity android:name=".view.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

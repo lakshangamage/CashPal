@@ -19,7 +19,7 @@ public class Account {
     }
     private static AccountDetail currentAccount;
     private static int currentSubAccountIndex;
-    private static ArrayList<Strings> currentActiveSubAccountList = new ArrayList<>();
+    private static ArrayList<String> currentActiveSubAccountList = new ArrayList<>();
 
     public static void setCurrentAccount(AccountDetail currentAccount) {
         Account.currentAccount = currentAccount;
@@ -30,7 +30,7 @@ public class Account {
         Account.currentSubAccountIndex = currentSubAccountIndex;
     }
 
-    public static void setCurrentActiveSubAccountList(ArrayList<Strings> currentActiveSubAccountList) {
+    public static void setCurrentActiveSubAccountList(ArrayList<String> currentActiveSubAccountList) {
         Account.currentActiveSubAccountList = currentActiveSubAccountList;
     }
 
@@ -42,7 +42,7 @@ public class Account {
         return currentSubAccountIndex;
     }
 
-    public static ArrayList<Strings> getCurrentActiveSubAccountList() {
+    public static ArrayList<String> getCurrentActiveSubAccountList() {
         return currentActiveSubAccountList;
     }
 }

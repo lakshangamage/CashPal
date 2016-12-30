@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.andexert.library.RippleView;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.intelligentz.cashpal.cashpal.Util;
 import com.intelligentz.cashpal.cashpal.model.HttpClient;
 import com.intelligentz.cashpal.cashpal.R;
 import com.intelligentz.cashpal.cashpal.model.Strings;
@@ -58,17 +59,13 @@ public class CustomerTopUp extends Fragment {
         titleText = (TextView) view.findViewById(R.id.titleTxt);
         rippleView = (RippleView) view.findViewById(R.id.rippleView);
         mobileTxt.addValidator(new RegexpValidator(Strings.getInvalidText(),"07\\d{8}"));
-        rippleView.setRippleDuration(100);
-        rippleView.setRippleColor(R.color.colorAccent);
-        rippleView.setRippleAlpha(300);
-        rippleView.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
-
+        RippleView.OnRippleCompleteListener listener = new RippleView.OnRippleCompleteListener() {
             @Override
             public void onComplete(RippleView rippleView) {
                 topup();
             }
-
-        });
+        };
+        Util.configureRippleView(rippleView,listener);
         setText();
         return view;
     }
@@ -153,8 +150,10 @@ public class CustomerTopUp extends Fragment {
             jsonParams.put("amount", amountTxt.getText().toString());
             StringEntity entity = new StringEntity(jsonParams.toString());
             HttpClient.post(getContext(), "topup", entity, HttpClient.CONTENT_TYPE_JSON, new JsonHttpResponseHandler() {
+
+
                 @Override
-                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                public void onSuccess(int statusCode, Header[] headers, String response) {
                     sweetAlertDialog.setTitleText(Strings.getSuccessText())
                     .setContentText(Strings.getSubmitTransactionSuccessDialogBody())
                     .setConfirmText(Strings.getOkText())
@@ -163,7 +162,7 @@ public class CustomerTopUp extends Fragment {
                 }
 
                 @Override
-                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                public void onFailure(int statusCode, Header[] headers, String response, Throwable throwable) {
                     sweetAlertDialog.setTitleText(Strings.getFailedText())
                             .setContentText(Strings.getSubmitTransactionFailureDialogBody())
                             .setConfirmText(Strings.getOkText())
