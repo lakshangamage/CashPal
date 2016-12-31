@@ -20,7 +20,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Customer Top Up"
+                android:text="Customer Withdrawal"
                 android:id="@+id/titleTxt"
                 android:padding="20dp"
                 android:textSize="20dp"
@@ -102,7 +102,7 @@
                     android:padding="10dp"
                     android:textStyle="bold"
                     android:background="@color/colorPrimaryDark"
-                />
+                    />
 
             </com.andexert.library.RippleView>
 

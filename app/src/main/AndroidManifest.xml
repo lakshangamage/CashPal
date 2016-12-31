@@ -13,17 +13,19 @@
         android:theme="@style/AppTheme"
         tools:replace="android:icon">
         <activity android:name=".view.MainActivity" />
-        <activity android:name=".view.LogInActivity"></activity>
+        <activity android:name=".view.LogInActivity" />
         <activity android:name=".view.OTPValidationActivity" />
-        <activity android:name=".view.LanguageSelectionActivity">
-
-        </activity>
+        <activity android:name=".view.LanguageSelectionActivity" />
         <activity android:name=".view.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".view.LanguageChangeActivity" />
+        <activity android:name=".view.AddAccountActivity" />
+        <activity android:name=".view.AddAccountOTPValidationActiviry"></activity>
     </application>
 
 </manifest>

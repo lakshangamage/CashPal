@@ -39,7 +39,7 @@ public class AccountsRecyclerAdaptor extends RecyclerView.Adapter<AccountsRecycl
     }
     @Override
     public void onBindViewHolder(RecyclerViewHolder holder, int position) {
-        holder.accountImageView.setBackgroundResource(accountList.get(position).getAccountIcon());
+        holder.accountImageView.setImageResource(accountList.get(position).getAccountIcon());
     }
     @Override
     public int getItemCount() {

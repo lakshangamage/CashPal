@@ -8,6 +8,10 @@ import android.widget.Button;
 
 import com.andexert.library.RippleView;
 import com.github.siyamed.shapeimageview.CircularImageView;
+import com.gitonway.lee.niftynotification.lib.Effects;
+import com.gitonway.lee.niftynotification.lib.NiftyNotificationView;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.intelligentz.cashpal.cashpal.R;
 import com.intelligentz.cashpal.cashpal.Util;
 import com.intelligentz.cashpal.cashpal.model.Account;
@@ -15,6 +19,7 @@ import com.intelligentz.cashpal.cashpal.model.AccountDetail;
 import com.intelligentz.cashpal.cashpal.model.HttpClient;
 import com.intelligentz.cashpal.cashpal.model.Strings;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.TextHttpResponseHandler;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 import org.json.JSONException;
@@ -44,7 +49,7 @@ public class OTPValidationActivity extends AppCompatActivity {
         imageView = (CircularImageView) findViewById(R.id.photoView);
         imageView.setImageResource(Account.getCurrentAccount().getAccountIcon());
         mobileText = (MaterialEditText) findViewById(R.id.mobileTxt);
-        mobileNumber = getIntent().getStringExtra("mobile");
+        mobileNumber = getIntent().getStringExtra("agent_mobile");
         mobileText.setText(mobileNumber);
         mobileText.setHint(Strings.getMobileTextHint());
         mobileText.setEnabled(false);
@@ -60,6 +65,13 @@ public class OTPValidationActivity extends AppCompatActivity {
         Util.configureRippleView(rippleView, listener);
         verifyBtn = (Button) findViewById(R.id.verifybtn);
         verifyBtn.setText(Strings.getVerifyText());
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String msg = Strings.getOtpValidationGuideMessage();
+        NiftyNotificationView.build(this, msg, Effects.thumbSlider,R.id.mLyout)
+                .setIcon(R.drawable.cashpal_icon).show();
     }
 
     public void verify() {
@@ -93,26 +105,35 @@ public class OTPValidationActivity extends AppCompatActivity {
         };
         JSONObject jsonParams = new JSONObject();
         try {
-            jsonParams.put("agentMobile", mobileNumber);
-            jsonParams.put("pin", pinText.getText().toString().trim());
+            jsonParams.put("agent_mobile", Util.validateMobile(mobileNumber));
+            jsonParams.put("otp", pinText.getText().toString().trim());
             StringEntity entity = new StringEntity(jsonParams.toString());
-            HttpClient.post(this, Account.getCurrentAccount().getOTP_VALIDATE_URL(), entity, HttpClient.CONTENT_TYPE_JSON, new JsonHttpResponseHandler() {
+            HttpClient.post(this, Account.getCurrentAccount().getOTP_VALIDATE_URL(), entity, HttpClient.CONTENT_TYPE_JSON, new TextHttpResponseHandler() {
 
 
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, String response) {
-                    sweetAlertDialog.dismissWithAnimation();
-                    AccountDetail account = Account.getCurrentAccount();
-                    if (!account.getSubAccoutList().contains(mobileNumber)) {
-                        account.getSubAccoutList().add(mobileNumber);
-                        Account.setCurrentSubAccountIndex(0);
+                    JsonObject jsonObject = new JsonParser().parse(response).getAsJsonObject();
+                    if (jsonObject.get("authenticated").getAsBoolean()) {
+                        sweetAlertDialog.dismissWithAnimation();
+                        AccountDetail account = Account.getCurrentAccount();
+                        if (!account.getSubAccoutList().contains(mobileNumber)) {
+                            account.getSubAccoutList().add(mobileNumber);
+                            Account.setCurrentSubAccountIndex(0);
+                        } else {
+                            Account.setCurrentSubAccountIndex(account.getSubAccoutList().indexOf(mobileNumber));
+                        }
+                        Account.getCurrentActiveSubAccountList().add(mobileNumber);
+                        Intent intent = new Intent(context, MainActivity.class);
+                        startActivity(intent);
+                        finish();
                     } else {
-                        Account.setCurrentSubAccountIndex(account.getSubAccoutList().indexOf(mobileNumber));
+                        sweetAlertDialog.setTitleText(Strings.getFailedText())
+                                .setContentText(Strings.getPinVerificationFaliureDialogBody())
+                                .setConfirmText(Strings.getOkText())
+                                .setConfirmClickListener(successListener)
+                                .changeAlertType(SweetAlertDialog.ERROR_TYPE);
                     }
-                    Account.getCurrentActiveSubAccountList().add(mobileNumber);
-                    Intent intent = new Intent(context, MainActivity.class);
-                    startActivity(intent);
-                    finish();
                 }
 
                 @Override

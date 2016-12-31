@@ -17,8 +17,8 @@ public abstract class AccountDetail {
     protected String accountName;
     private final ArrayList<String> subAccoutList = new ArrayList<>();
     protected String account_id;
-    private final String OTP_REQUEST_URL= "otp/request";
-    private final String OTP_VALIDATE_URL = "otp/validate";
+    private final String OTP_REQUEST_URL= "authenticate/otp/request";
+    private final String OTP_VALIDATE_URL = "authenticate/otp/validate";
     private final String CUSTOMER_TOP_UP_URL = "customer/topup";
     private final String CUSTOMER_WITHDRAWAL_URL = "customer/withdrawal";
     private final String TRANSACTION_STATUS_URL = "transaction/status";

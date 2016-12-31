@@ -14,4 +14,13 @@ public class Util {
         return rippleView;
     }
 
+    public static String validateMobile (String mobile) {
+        String validatedMobile = mobile;
+
+        if (validatedMobile.charAt(0) == '0') {
+            validatedMobile = "94"+validatedMobile.substring(1);
+        }
+        return validatedMobile;
+    }
+
 }

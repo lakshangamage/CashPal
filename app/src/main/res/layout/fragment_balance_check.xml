@@ -20,7 +20,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Customer Top Up"
+                android:text="Customer Withdrawal"
                 android:id="@+id/titleTxt"
                 android:padding="20dp"
                 android:textSize="20dp"
@@ -45,44 +45,6 @@
                 android:inputType="numberPassword"
                 android:textSize="15dp"
                 />
-            <com.rengwuxian.materialedittext.MaterialEditText
-                android:id="@+id/mobileTxt"
-                android:hint="Mobile"
-                android:layout_width="250dp"
-                android:layout_gravity="center"
-                android:layout_height="wrap_content"
-                app:met_iconLeft="@drawable/mobile_number_icon"
-                app:met_floatingLabel="highlight"
-                app:met_singleLineEllipsis="true"
-                app:met_clearButton="true"
-                app:met_textColor="@color/met_textColor"
-                app:met_baseColor="@color/met_baseColor"
-                app:met_primaryColor="@color/met_primaryColor"
-                app:met_errorColor="@color/met_errorColor"
-                app:met_maxCharacters="10"
-                app:met_autoValidate="true"
-                android:inputType="phone"
-                app:met_helperText="07XXXXXXXX"
-                android:textSize="15dp"
-                />
-            <com.rengwuxian.materialedittext.MaterialEditText
-                android:id="@+id/amountTxt"
-                android:hint="Amount"
-                android:layout_width="250dp"
-                android:layout_gravity="center"
-                android:layout_height="wrap_content"
-                app:met_iconLeft="@drawable/rupee"
-                app:met_floatingLabel="highlight"
-                app:met_singleLineEllipsis="true"
-                app:met_clearButton="true"
-                app:met_textColor="@color/met_textColor"
-                app:met_baseColor="@color/met_baseColor"
-                app:met_primaryColor="@color/met_primaryColor"
-                app:met_errorColor="@color/met_errorColor"
-                app:met_autoValidate="true"
-                android:inputType="numberDecimal"
-                android:textSize="15dp"
-                />
             <com.andexert.library.RippleView
                 android:id="@+id/rippleView"
                 android:layout_width="wrap_content"
@@ -102,7 +64,7 @@
                     android:padding="10dp"
                     android:textStyle="bold"
                     android:background="@color/colorPrimaryDark"
-                />
+                    />
 
             </com.andexert.library.RippleView>
 

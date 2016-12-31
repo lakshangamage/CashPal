@@ -29,6 +29,11 @@ public class Strings {
     protected static String VERIFY_PROCESSING_TITLE;
     protected static String PIN_VERIFICATION_FALIURE_DIALOG_BODY;
     protected static String PROCEED_TEXT;
+    protected static String OTP_VALIDATION_GUIDE_MESSAGE;
+    protected static String CUSTOMER_CASH_WITHDRAWAL_TITLE;
+    protected static String BALANCE_CHECK_TITLE;
+    protected static String SET_TEXT;
+
 
     static {
         English.setLanguage();
@@ -133,6 +138,22 @@ public class Strings {
         return VERIFY_TEXT;
     }
 
+    public static String getOtpValidationGuideMessage() {
+        return OTP_VALIDATION_GUIDE_MESSAGE;
+    }
+
+    public static String getCustomerCashWithdrawalTitle() {
+        return CUSTOMER_CASH_WITHDRAWAL_TITLE;
+    }
+
+    public static String getBalanceCheckTitle() {
+        return BALANCE_CHECK_TITLE;
+    }
+
+    public static String getSetText() {
+        return SET_TEXT;
+    }
+
     public static class English {
         public static void setLanguage() {
             Strings.CUSTOMER_TOP_UP_TITLE = "Customer Top Up";
@@ -160,6 +181,10 @@ public class Strings {
             Strings.VERIFY_PROCESSING_TITLE = "Verifying...";
             Strings.PIN_VERIFICATION_FALIURE_DIALOG_BODY = "Some thing went wrong. Please check your pin and try again";
             Strings.PROCEED_TEXT = "Proceed";
+            Strings.OTP_VALIDATION_GUIDE_MESSAGE = "Enter the pass code which you will receive as a SMS shortly.";
+            Strings.CUSTOMER_CASH_WITHDRAWAL_TITLE = "Customer Withdrawal";
+            Strings.BALANCE_CHECK_TITLE = "Balance Check";
+            Strings.SET_TEXT = "Set";
         }
     }
 
@@ -190,6 +215,10 @@ public class Strings {
             Strings.VERIFY_PROCESSING_TITLE = "තහවුරු කරමින්...";
             Strings.PIN_VERIFICATION_FALIURE_DIALOG_BODY = "කරුණාකර ඔබේ කේතය නැවත පරීක්ෂා කරන්න.";
             Strings.PROCEED_TEXT = "ඉදිරියට ";
+            Strings.OTP_VALIDATION_GUIDE_MESSAGE = "ඔබට SMS පණිවුඩයක් හරහා එවන ලද රහස්ය කේතය ඇතුළත් කරන්න";
+            Strings.CUSTOMER_CASH_WITHDRAWAL_TITLE = "පාරිභෝගික ගිණුමෙන් මුදල් ගැනීම";
+            Strings.BALANCE_CHECK_TITLE = "ගිණුම් ශේෂය විමසීම";
+            Strings.SET_TEXT = "සක්\u200Dරිය කරන්න";
         }
     }
 

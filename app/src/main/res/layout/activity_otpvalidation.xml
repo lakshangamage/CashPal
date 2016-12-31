@@ -17,10 +17,15 @@
         android:layout_height="0px"
         android:gravity="center_horizontal|top"
         >
+    <RelativeLayout
+        android:id="@+id/mLyout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
         <com.github.siyamed.shapeimageview.CircularImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="80dp"
+            android:layout_margin="100dp"
             android:id="@+id/photoView"
             android:src="@drawable/ezcash_icon"
             app:siBorderWidth="2dp"
@@ -82,7 +87,6 @@
             app:met_iconLeft="@drawable/mobile_number_icon"
             app:met_floatingLabel="highlight"
             app:met_singleLineEllipsis="true"
-            app:met_clearButton="true"
             app:met_textColor="@color/met_textColor"
             app:met_baseColor="@color/met_baseColor"
             app:met_primaryColor="@color/met_primaryColor"

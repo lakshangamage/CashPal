@@ -13,7 +13,7 @@ import cz.msebera.android.httpclient.HttpEntity;
  */
 public class HttpClient {
 
-    private static final String BASE_URL = "http://ideamarthosting.dialog.lk:9029/rest/";
+    private static final String BASE_URL = "http://ideamarthosting.dialog.lk:9183/cashpal/rest/";
     public static final String CONTENT_TYPE_JSON = "application/json";
     private static AsyncHttpClient client = new AsyncHttpClient();
 

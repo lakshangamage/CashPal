@@ -20,13 +20,13 @@ import com.intelligentz.cashpal.cashpal.model.Account;
 import com.intelligentz.cashpal.cashpal.model.AccountDetail;
 import com.intelligentz.cashpal.cashpal.model.HttpClient;
 import com.intelligentz.cashpal.cashpal.model.Strings;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.TextHttpResponseHandler;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.rengwuxian.materialedittext.validation.RegexpValidator;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
@@ -34,7 +34,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.entity.StringEntity;
 
-public class LogInActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+public class AddAccountActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
     private MaterialEditText mobileTxt;
     private Spinner accountSpinner;
     SweetAlertDialog progressDialog;
@@ -44,7 +44,7 @@ public class LogInActivity extends AppCompatActivity implements AdapterView.OnIt
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_log_in);
+        setContentView(R.layout.activity_add_account);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         context = this;
         accountSpinner = (Spinner) findViewById(R.id.spinner);
@@ -64,26 +64,8 @@ public class LogInActivity extends AppCompatActivity implements AdapterView.OnIt
         Util.configureRippleView(rippleView,listener);
         loginBtn = (Button) findViewById(R.id.loginBtn);
         loginBtn.setText(Strings.getLogInText());
-        loadAccounts();
     }
-    private void loadAccounts() {
-        for (int i=0; i<Account.accountDetailList.size(); i++) {
-            AccountDetail acc = Account.accountDetailList.get(i);
-            SharedPreferences mPrefs = context.getSharedPreferences(acc.getAccount_id(), Context.MODE_PRIVATE);
-            Gson gson = new Gson();
-            String json = mPrefs.getString(Account.SUB_ACCOUNT_IDENTIFIER, null);
-            if (json != null && !json.isEmpty()) {
-                ArrayList<String> persistedList = gson.fromJson(json, ArrayList.class);
-                if (persistedList != null && !persistedList.isEmpty()) {
-                    acc.getSubAccoutList().clear();
-                    for (String id : persistedList) {
-                        acc.addSubAccountToList(id);
-                    }
-                }
-            }
-            Account.setCurrentAccount(acc);
-        }
-    }
+
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         Account.setCurrentAccount(Account.accountDetailList.get(i));
