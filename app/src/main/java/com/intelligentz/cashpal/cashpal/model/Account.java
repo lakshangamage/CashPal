@@ -13,6 +13,7 @@ import java.util.ArrayList;
 public class Account {
     public static ArrayList<AccountDetail> accountDetailList = new ArrayList<>();
     public static final String SUB_ACCOUNT_IDENTIFIER = "sub_accounts";
+    public static boolean isAccountChanged = false;
     static {
         accountDetailList.add(new MCashDetail().init());
         accountDetailList.add(new EzCashDetail().init());

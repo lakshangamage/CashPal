@@ -25,7 +25,8 @@
         </activity>
         <activity android:name=".view.LanguageChangeActivity" />
         <activity android:name=".view.AddAccountActivity" />
-        <activity android:name=".view.AddAccountOTPValidationActiviry"></activity>
+        <activity android:name=".view.AddAccountOTPValidationActiviry" />
+        <activity android:name=".view.SwitchAccountLogInActivity"></activity>
     </application>
 
 </manifest>

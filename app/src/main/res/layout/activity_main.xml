@@ -54,8 +54,8 @@
         android:fitsSystemWindows="true">
         <RelativeLayout
             android:id="@+id/mLyout"
-            android:layout_marginTop="50dp"
-            android:gravity="bottom"
+            android:layout_marginTop="30dp"
+            android:gravity="top"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             >

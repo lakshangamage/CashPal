@@ -2,24 +2,21 @@ package com.intelligentz.cashpal.cashpal.view;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Spinner;
 
 import com.andexert.library.RippleView;
+import com.github.siyamed.shapeimageview.CircularImageView;
 import com.gitonway.lee.niftynotification.lib.Effects;
 import com.gitonway.lee.niftynotification.lib.NiftyNotificationView;
-import com.google.gson.Gson;
 import com.intelligentz.cashpal.cashpal.R;
 import com.intelligentz.cashpal.cashpal.Util;
 import com.intelligentz.cashpal.cashpal.adaptor.AccountSpinnerAdaptor;
 import com.intelligentz.cashpal.cashpal.model.Account;
-import com.intelligentz.cashpal.cashpal.model.AccountDetail;
 import com.intelligentz.cashpal.cashpal.model.HttpClient;
 import com.intelligentz.cashpal.cashpal.model.Strings;
 import com.loopj.android.http.TextHttpResponseHandler;
@@ -30,16 +27,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.entity.StringEntity;
 
-public class AddAccountActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+public class SwitchAccountLogInActivity extends AppCompatActivity {
     private MaterialEditText mobileTxt;
-    private Spinner accountSpinner;
     SweetAlertDialog progressDialog;
+    CircularImageView imageView;
     RippleView rippleView;
     Button loginBtn;
     Context context;
@@ -47,12 +43,11 @@ public class AddAccountActivity extends AppCompatActivity implements AdapterView
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_account);
+        setContentView(R.layout.activity_switch_account_log_in);
         context = this;
-        accountSpinner = (Spinner) findViewById(R.id.spinner);
-        accountSpinner.setAdapter(new AccountSpinnerAdaptor(this));
-        accountSpinner.setOnItemSelectedListener(this);
-        accountSpinner.setPrompt(Strings.getLogInSpinnerPrompt());
+        selectedAccount = getIntent().getIntExtra("selectedAccount",0);
+        imageView = (CircularImageView) findViewById(R.id.photoView);
+        imageView.setImageResource(Account.accountDetailList.get(selectedAccount).getAccountIcon());
         mobileTxt = (MaterialEditText) findViewById(R.id.mobileTxt);
         mobileTxt.setHint(Strings.getMobileTextHint());
         mobileTxt.addValidator(new RegexpValidator(Strings.getInvalidText(),"07\\d{8}"));
@@ -66,15 +61,6 @@ public class AddAccountActivity extends AppCompatActivity implements AdapterView
         Util.configureRippleView(rippleView,listener);
         loginBtn = (Button) findViewById(R.id.loginBtn);
         loginBtn.setText(Strings.getLogInText());
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        selectedAccount = i;
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
     }
 
     public void login(){

@@ -60,7 +60,7 @@ public class LanguageChangeActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        String msg = "Select your preferred Language.";
+        String msg = Strings.getLanguageChangeMessage();
         NiftyNotificationView.build(this, msg, Effects.thumbSlider,R.id.mLyout)
                 .setIcon(R.drawable.cashpal_icon).show();
     }

@@ -1,11 +1,8 @@
 package com.intelligentz.cashpal.cashpal.view;
 
-import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.os.PersistableBundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -15,28 +12,23 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
-import android.widget.ImageView;
+import android.view.WindowManager;
 import android.widget.TextView;
-
 import com.github.siyamed.shapeimageview.CircularImageView;
-import com.google.gson.Gson;
 import com.intelligentz.cashpal.cashpal.adaptor.AccountsRecyclerAdaptor;
 import com.intelligentz.cashpal.cashpal.adaptor.NavigationViewPageAdaptor;
 import com.intelligentz.cashpal.cashpal.R;
 import com.intelligentz.cashpal.cashpal.model.Account;
 import com.intelligentz.cashpal.cashpal.model.AccountDetail;
-
 import java.util.ArrayList;
-
 import devlight.io.library.ntb.NavigationTabBar;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MenuItem.OnMenuItemClickListener {
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     NavigationView navigationView;
@@ -44,18 +36,20 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView accountsRecyclerView;
     private RecyclerView.LayoutManager accountslayoutManager;
     private Context context = this;
-    private RecyclerView.Adapter accountAdapter;
+    private AccountsRecyclerAdaptor accountAdapter;
     private CircularImageView imageView;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private TextView headeraccountname;
     private TextView headersubaccountid;
     private Menu drawerMenu;
+    private SubMenu accountMenu;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         initUI();
         configureDrawer();
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
@@ -141,9 +135,17 @@ public class MainActivity extends AppCompatActivity {
                 headersubaccountid.setText(subAccounts.get(
                         Account.getCurrentSubAccountIndex()));
                 drawerMenu = navigationView.getMenu();
-                SubMenu accountMenu = drawerMenu.addSubMenu(Menu.NONE, 99, 0, "Accounts");
+                accountMenu = drawerMenu.addSubMenu(R.id.menugroup, 99, 0, "Accounts");
+                //accountMenu.setHeaderIcon(R.drawable.cashpal_icon);
+                accountMenu.setIcon(R.drawable.account);
                 for (int i = 0; i< subAccounts.size(); i++) {
-                    accountMenu.add(Menu.NONE, i, i, subAccounts.get(i));
+                    MenuItem menuItem = accountMenu.add(R.id.menugroup, i, i, subAccounts.get(i)).setIcon(R.drawable.account);
+                    menuItem.setOnMenuItemClickListener(this);
+                    if (Account.getCurrentActiveSubAccountList().contains(subAccounts.get(i))) {
+                        menuItem.setIcon(R.drawable.loggedin_account);
+                    }else{
+                        menuItem.setIcon(R.drawable.loggedout_account);
+                    }
                 }
             }
         }
@@ -178,7 +180,8 @@ public class MainActivity extends AppCompatActivity {
     public void jumptolanguagechange(MenuItem item){
         Intent intent = new Intent(this, LanguageChangeActivity.class);
         startActivity(intent);
-        finish();
+        drawerLayout.closeDrawers();
+        //finish();
     }
 
     public void logout(MenuItem item) {
@@ -193,5 +196,52 @@ public class MainActivity extends AppCompatActivity {
     public void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         actionBarDrawerToggle.syncState();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (Account.isAccountChanged) {
+            Account.isAccountChanged = false;
+            switchAccount();
+        }
+
+    }
+
+    public void switchAccount() {
+        AccountDetail currentAccountDetail = Account.getCurrentAccount();
+        imageView.setImageResource(currentAccountDetail.getAccountIcon());
+        headeraccountname.setText(currentAccountDetail.getAccountName());
+        ArrayList<String> subAccounts = currentAccountDetail.getSubAccoutList();
+        if (subAccounts != null && !subAccounts.isEmpty()) {
+            headersubaccountid.setText(subAccounts.get(
+                    Account.getCurrentSubAccountIndex()));
+            drawerMenu = navigationView.getMenu();
+            //accountMenu.setHeaderIcon(R.drawable.cashpal_icon);
+            accountMenu.clear();
+            for (int i = 0; i< subAccounts.size(); i++) {
+                MenuItem menuItem = accountMenu.add(R.id.menugroup, i, i, subAccounts.get(i)).setIcon(R.drawable.account);
+                if (Account.getCurrentActiveSubAccountList().contains(subAccounts.get(i))) {
+                    menuItem.setIcon(R.drawable.loggedin_account);
+                }else{
+                    menuItem.setIcon(R.drawable.loggedout_account);
+                }
+            }
+        }
+        accountAdapter.changeAccount();
+    }
+
+    public void logInExistingAccount(int accountIndex) {
+        Intent intent = new Intent(this, SwitchAccountLogInActivity.class);
+        intent.putExtra("selectedAccount", accountIndex);
+        startActivity(intent);
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem menuItem) {
+        Intent intent = new Intent(this, AddAccountOTPValidationActiviry.class);
+        intent.putExtra("agent_mobile",menuItem.getTitle());
+        intent.putExtra("selectedAccount", Account.accountDetailList.indexOf(Account.getCurrentAccount()));
+        return false;
     }
 }

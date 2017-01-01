@@ -21,8 +21,8 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        //loadAccounts();
-        SharedPreferences mPrefs = getSharedPreferences("cashpal.language", Context.MODE_PRIVATE);
+        loadAccounts();
+        /*SharedPreferences mPrefs = getSharedPreferences("cashpal.language", Context.MODE_PRIVATE);
         String language = mPrefs.getString("language", null);
         if (language == null) {
             Intent intent = new Intent(this, LanguageSelectionActivity.class);
@@ -37,7 +37,7 @@ public class SplashActivity extends AppCompatActivity {
             Intent intent = new Intent(this, LogInActivity.class);
             startActivity(intent);
             finish();
-        }
+        }*/
     }
 
     private void loadAccounts() {
@@ -61,6 +61,19 @@ public class SplashActivity extends AppCompatActivity {
         String mobileNumber = "0773472649";
         if (!account.getSubAccoutList().contains(mobileNumber)) {
             account.getSubAccoutList().add(mobileNumber);
+            account.getSubAccoutList().add("0771560046");
+            account.getSubAccoutList().add("0771560046");
+            account.getSubAccoutList().add("0771560046");
+            account.getSubAccoutList().add("0771560046");
+            account.getSubAccoutList().add("0771560046");
+            account.getSubAccoutList().add("0771560046");
+            account.getSubAccoutList().add("0771560046");
+            account.getSubAccoutList().add("0771560046");
+            account.getSubAccoutList().add("0771560046");
+            account.getSubAccoutList().add("0771560046");
+            account.getSubAccoutList().add("0771560046");
+            account.getSubAccoutList().add("0771560046");
+            account.getSubAccoutList().add("0771560046");
             Account.setCurrentSubAccountIndex(0);
         } else {
             Account.setCurrentSubAccountIndex(account.getSubAccoutList().indexOf(mobileNumber));

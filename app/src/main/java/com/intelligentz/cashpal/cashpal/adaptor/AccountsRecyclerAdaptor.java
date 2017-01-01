@@ -15,6 +15,7 @@ import com.google.gson.Gson;
 import com.intelligentz.cashpal.cashpal.R;
 import com.intelligentz.cashpal.cashpal.model.Account;
 import com.intelligentz.cashpal.cashpal.model.AccountDetail;
+import com.intelligentz.cashpal.cashpal.model.Strings;
 import com.intelligentz.cashpal.cashpal.view.MainActivity;
 
 import java.util.ArrayList;
@@ -54,26 +55,32 @@ public class AccountsRecyclerAdaptor extends RecyclerView.Adapter<AccountsRecycl
         AccountDetail newAccount = accountList.get(position);
 
         if (newAccount.getSubAccoutList() != null && !newAccount.getSubAccoutList().isEmpty()) {
-            Account.setCurrentAccount(newAccount);
+            ArrayList<String> subAccountList = newAccount.getSubAccoutList();
+            for (int i=0; i<subAccountList.size(); i++) {
+                if (Account.getCurrentActiveSubAccountList().contains(subAccountList.get(i))) {
+                    Account.setCurrentAccount(newAccount);
+                    Account.setCurrentSubAccountIndex(i);
+                    activity.switchAccount();
+                    return;
+                }
+            }
+            activity.logInExistingAccount(position);
         } else {
-            String msg = "You have no " + newAccount.getAccountName() + " account added.";
+            String msg = String.format(Strings.getNoAccountRegisteredMessage(),
+                    newAccount.getAccountName());
             NiftyNotificationView.build(activity, msg, Effects.thumbSlider,R.id.mLyout)
                     .setIcon(R.drawable.cashpal_icon).show();
-            return;
         }
-        Account.setCurrentSubAccountIndex(0);
-        for (int i = 0; i < newAccount.getSubAccoutList().size(); i++){
-            if (Account.getCurrentActiveSubAccountList().contains(newAccount.getSubAccoutList().get(i))) {
-                Account.setCurrentSubAccountIndex(i);
-                break;
-            }
-        }
-        accountList.remove(position);
-        accountList.add(newAccount);
+    }
+
+    public void changeAccount() {
+        int position = accountList.indexOf(Account.getCurrentAccount());
+        accountList.remove(Account.getCurrentAccount());
+        accountList.add(Account.getCurrentAccount());
         notifyItemRemoved(position);
         notifyItemRangeChanged(position,accountList.size()-1);
-        activity.update();
     }
+
     public class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         CircularImageView accountImageView = null;
         ArrayList<AccountDetail> accountList = null;

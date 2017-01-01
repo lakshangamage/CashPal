@@ -2,6 +2,7 @@ package com.intelligentz.cashpal.cashpal.view;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
@@ -10,6 +11,7 @@ import com.andexert.library.RippleView;
 import com.github.siyamed.shapeimageview.CircularImageView;
 import com.gitonway.lee.niftynotification.lib.Effects;
 import com.gitonway.lee.niftynotification.lib.NiftyNotificationView;
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.intelligentz.cashpal.cashpal.R;
@@ -119,7 +121,13 @@ public class OTPValidationActivity extends AppCompatActivity {
                         AccountDetail account = Account.getCurrentAccount();
                         if (!account.getSubAccoutList().contains(mobileNumber)) {
                             account.getSubAccoutList().add(mobileNumber);
-                            Account.setCurrentSubAccountIndex(0);
+                            Account.setCurrentSubAccountIndex(account.getSubAccoutList().size()-1);
+                            SharedPreferences mPrefs = context.getSharedPreferences(account.getAccount_id(), Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = mPrefs.edit();
+                            Gson gson = new Gson();
+                            String json = gson.toJson(account.getSubAccoutList());
+                            editor.putString(Account.SUB_ACCOUNT_IDENTIFIER, json);
+                            editor.commit();
                         } else {
                             Account.setCurrentSubAccountIndex(account.getSubAccoutList().indexOf(mobileNumber));
                         }

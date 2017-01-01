@@ -33,7 +33,9 @@ public class Strings {
     protected static String CUSTOMER_CASH_WITHDRAWAL_TITLE;
     protected static String BALANCE_CHECK_TITLE;
     protected static String SET_TEXT;
-
+    protected static String LANGUAGE_CHANGE_MESSAGE;
+    protected static String ALREADY_LOGGED_IN_MESSAGE;
+    protected static String NO_ACCOUNT_REGISTERED_MESSAGE;
 
     static {
         English.setLanguage();
@@ -154,6 +156,18 @@ public class Strings {
         return SET_TEXT;
     }
 
+    public static String getLanguageChangeMessage() {
+        return LANGUAGE_CHANGE_MESSAGE;
+    }
+
+    public static String getAlreadyLoggedInMessage() {
+        return ALREADY_LOGGED_IN_MESSAGE;
+    }
+
+    public static String getNoAccountRegisteredMessage() {
+        return NO_ACCOUNT_REGISTERED_MESSAGE;
+    }
+
     public static class English {
         public static void setLanguage() {
             Strings.CUSTOMER_TOP_UP_TITLE = "Customer Top Up";
@@ -185,6 +199,9 @@ public class Strings {
             Strings.CUSTOMER_CASH_WITHDRAWAL_TITLE = "Customer Withdrawal";
             Strings.BALANCE_CHECK_TITLE = "Balance Check";
             Strings.SET_TEXT = "Set";
+            Strings.LANGUAGE_CHANGE_MESSAGE = "Select your preferred Language.";
+            Strings.ALREADY_LOGGED_IN_MESSAGE = "You have already added this account";
+            Strings.NO_ACCOUNT_REGISTERED_MESSAGE = "You have no %s account added.";
         }
     }
 
@@ -219,6 +236,9 @@ public class Strings {
             Strings.CUSTOMER_CASH_WITHDRAWAL_TITLE = "පාරිභෝගික ගිණුමෙන් මුදල් ගැනීම";
             Strings.BALANCE_CHECK_TITLE = "ගිණුම් ශේෂය විමසීම";
             Strings.SET_TEXT = "සක්\u200Dරිය කරන්න";
+            Strings.LANGUAGE_CHANGE_MESSAGE = "ඔබ කැමති භාෂාවක් තෝරන්න";
+            Strings.ALREADY_LOGGED_IN_MESSAGE = "ඔබ දැනටමත් මෙම ගිණුම ක්\u200Dරියාත්මක කර ඇත.";
+            Strings.NO_ACCOUNT_REGISTERED_MESSAGE = "ඔබට ලියාපදිංචි කළ %s ගිණුම් කිසිවක් නොමැත.";
         }
     }
 

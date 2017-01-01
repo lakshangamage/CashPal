@@ -10,7 +10,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
     android:gravity="center_horizontal"
-    tools:context="com.intelligentz.cashpal.cashpal.view.AddAccountActivity">
+    tools:context="com.intelligentz.cashpal.cashpal.view.SwitchAccountLogInActivity">
     <RelativeLayout
         android:layout_weight="1"
         android:layout_width="match_parent"
@@ -33,19 +33,21 @@
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="0px">
-        <Spinner
-            android:layout_width="match_parent"
+        <com.github.siyamed.shapeimageview.CircularImageView
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
-            android:prompt="@string/spinner_prompt"
-            android:spinnerMode="dialog"
+            android:id="@+id/photoView"
+            android:src="@drawable/ezcash_icon"
             android:gravity="center_horizontal"
-            android:id="@+id/spinner"
-            android:layout_marginBottom="25dp"/>
+            app:siBorderWidth="2dp"
+            app:siBorderColor="#d1d2d3"
+            android:layout_centerHorizontal="true"
+            />
 
         <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/mobileTxt"
             android:hint="Mobile"
-            android:layout_below="@id/spinner"
+            android:layout_below="@id/photoView"
             android:layout_width="match_parent"
             android:layout_gravity="center"
             android:layout_height="wrap_content"
