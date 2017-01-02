@@ -69,9 +69,6 @@ public class eceivePaymentActivity extends AppCompatActivity implements AdapterV
         YoYo.with(Techniques.FlipInX)
                 .duration(1200)
                 .playOn(findViewById(R.id.paymentbtn));
-        YoYo.with(Techniques.FlipInX)
-                .duration(1200)
-                .playOn(findViewById(R.id.spinner));
     }
 
     @Override
