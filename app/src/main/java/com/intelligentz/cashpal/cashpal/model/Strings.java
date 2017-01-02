@@ -36,6 +36,18 @@ public class Strings {
     protected static String LANGUAGE_CHANGE_MESSAGE;
     protected static String ALREADY_LOGGED_IN_MESSAGE;
     protected static String NO_ACCOUNT_REGISTERED_MESSAGE;
+    protected static String PAYMENT_TITLE;
+    protected static String BILL_PAYMENT_BUTTON_TEXT;
+    protected static String UTILITY_PAYMENT_BUTTON_TEXT;
+    protected static String INSTITUTIONAL_PAYMENT_BUTTON_TEXT;
+    protected static String RECEIVE_PAYMENT_BUTTON_TEXT;
+    protected static String BILL_TYPE_TEXT;
+    protected static String ACCOUNT_NO_TEXT;
+    protected static String PAY_TEXT;
+    protected static String UTILITY_TYPE_TEXT;
+    protected static String INSTITUTION_TEXT;
+    protected static String RECEIVE_TEXT;
+
 
     static {
         English.setLanguage();
@@ -168,6 +180,50 @@ public class Strings {
         return NO_ACCOUNT_REGISTERED_MESSAGE;
     }
 
+    public static String getBillPaymentButtonText() {
+        return BILL_PAYMENT_BUTTON_TEXT;
+    }
+
+    public static String getInstitutionalPaymentButtonText() {
+        return INSTITUTIONAL_PAYMENT_BUTTON_TEXT;
+    }
+
+    public static String getPaymentTitle() {
+        return PAYMENT_TITLE;
+    }
+
+    public static String getReceivePaymentButtonText() {
+        return RECEIVE_PAYMENT_BUTTON_TEXT;
+    }
+
+    public static String getUtilityPaymentButtonText() {
+        return UTILITY_PAYMENT_BUTTON_TEXT;
+    }
+
+    public static String getBillTypeText() {
+        return BILL_TYPE_TEXT;
+    }
+
+    public static String getAccountNoText() {
+        return ACCOUNT_NO_TEXT;
+    }
+
+    public static String getPayText() {
+        return PAY_TEXT;
+    }
+
+    public static String getUtilityTypeText() {
+        return UTILITY_TYPE_TEXT;
+    }
+
+    public static String getInstitutionText() {
+        return INSTITUTION_TEXT;
+    }
+
+    public static String getReceiveText() {
+        return RECEIVE_TEXT;
+    }
+
     public static class English {
         public static void setLanguage() {
             Strings.CUSTOMER_TOP_UP_TITLE = "Customer Top Up";
@@ -202,7 +258,19 @@ public class Strings {
             Strings.LANGUAGE_CHANGE_MESSAGE = "Select your preferred Language.";
             Strings.ALREADY_LOGGED_IN_MESSAGE = "You have already added this account";
             Strings.NO_ACCOUNT_REGISTERED_MESSAGE = "You have no %s account added.";
+            Strings.PAYMENT_TITLE = "Payment";
+            Strings.BILL_PAYMENT_BUTTON_TEXT = "Bill Payment";
+            Strings.UTILITY_PAYMENT_BUTTON_TEXT = "Utility Payment";
+            Strings.INSTITUTIONAL_PAYMENT_BUTTON_TEXT = "Institutional Payment";
+            Strings.RECEIVE_PAYMENT_BUTTON_TEXT = "Receive Payment";
+            Strings.BILL_TYPE_TEXT = "Type of Bill";
+            Strings.ACCOUNT_NO_TEXT = "Account No.";
+            Strings.PAY_TEXT = "Pay";
+            Strings.UTILITY_TYPE_TEXT = "Type of Utility";
+            Strings.INSTITUTION_TEXT = "Institution";
+            Strings.RECEIVE_TEXT = "Receive";
         }
+
     }
 
     public static class Sinhala {
@@ -239,6 +307,17 @@ public class Strings {
             Strings.LANGUAGE_CHANGE_MESSAGE = "ඔබ කැමති භාෂාවක් තෝරන්න";
             Strings.ALREADY_LOGGED_IN_MESSAGE = "ඔබ දැනටමත් මෙම ගිණුම ක්\u200Dරියාත්මක කර ඇත.";
             Strings.NO_ACCOUNT_REGISTERED_MESSAGE = "ඔබට ලියාපදිංචි කළ %s ගිණුම් කිසිවක් නොමැත.";
+            Strings.PAYMENT_TITLE = "ගෙවීම්";
+            Strings.BILL_PAYMENT_BUTTON_TEXT = "බිල්පත් ගෙවීම්";
+            Strings.UTILITY_PAYMENT_BUTTON_TEXT = "උපයෝගීතා ගෙවීම්";
+            Strings.INSTITUTIONAL_PAYMENT_BUTTON_TEXT = "ආයතනික ගෙවීම්";
+            Strings.RECEIVE_PAYMENT_BUTTON_TEXT = "පාරිභෝගික අය කිරීම්";
+            Strings.BILL_TYPE_TEXT = "බිල්පත් වර්ගය";
+            Strings.ACCOUNT_NO_TEXT = "ගිණුම් අංකය";
+            Strings.PAY_TEXT = "ගෙවන්න";
+            Strings.UTILITY_TYPE_TEXT = "උපයෝගීතා වර්ගය";
+            Strings.INSTITUTION_TEXT = "ආයතනය";
+            Strings.RECEIVE_TEXT = "අය කරගන්න";
         }
     }
 

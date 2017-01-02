@@ -26,7 +26,11 @@
         <activity android:name=".view.LanguageChangeActivity" />
         <activity android:name=".view.AddAccountActivity" />
         <activity android:name=".view.AddAccountOTPValidationActiviry" />
-        <activity android:name=".view.SwitchAccountLogInActivity"></activity>
+        <activity android:name=".view.SwitchAccountLogInActivity" />
+        <activity android:name=".view.BillPaymentActivity" />
+        <activity android:name=".view.UtilityPaymentActivity" />
+        <activity android:name=".view.InstitutionalPaymentActivity" />
+        <activity android:name=".view.eceivePaymentActivity"></activity>
     </application>
 
 </manifest>

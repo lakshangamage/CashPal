@@ -67,8 +67,8 @@ public class MainActivity extends AppCompatActivity implements MenuItem.OnMenuIt
         NavigationViewPageAdaptor navigationViewPageAdaptor = new NavigationViewPageAdaptor(getSupportFragmentManager());
         navigationViewPageAdaptor.addFragments(new CustomerTopUp(),"TopUp");
         navigationViewPageAdaptor.addFragments(new CashWithdrawalFragment(),"DownBelow");
-        navigationViewPageAdaptor.addFragments(new BalanceCheckFragment(),"DownUP");
-        navigationViewPageAdaptor.addFragments(new CustomerTopUp(),"Downside");
+        navigationViewPageAdaptor.addFragments(new PaymentFragment(),"DownUP");
+        navigationViewPageAdaptor.addFragments(new BalanceCheckFragment(),"Downside");
         navigationViewPageAdaptor.addFragments(new CustomerTopUp(),"DownBlww");
 
         viewPager.setAdapter(navigationViewPageAdaptor);
@@ -161,22 +161,6 @@ public class MainActivity extends AppCompatActivity implements MenuItem.OnMenuIt
         accountsRecyclerView.setAdapter(accountAdapter);
     }
 
-
-    public void update() {
-        if (Account.getCurrentAccount() != null) {
-            AccountDetail currentAccountDetail = Account.getCurrentAccount();
-            imageView.setImageResource(currentAccountDetail.getAccountIcon());
-            headeraccountname.setText(currentAccountDetail.getAccountName());
-            currentAccountDetail.getSubAccoutList();
-            if (currentAccountDetail.getSubAccoutList() != null && !currentAccountDetail.getSubAccoutList().isEmpty()) {
-                headersubaccountid.setText(currentAccountDetail.getSubAccoutList().get(
-                        Account.getCurrentSubAccountIndex()));
-            } else {
-
-            }
-        }
-    }
-
     public void jumptolanguagechange(MenuItem item){
         Intent intent = new Intent(this, LanguageChangeActivity.class);
         startActivity(intent);
@@ -189,7 +173,8 @@ public class MainActivity extends AppCompatActivity implements MenuItem.OnMenuIt
     }
 
     public void jumptoaddaccout(MenuItem item) {
-
+        Intent intent = new Intent(this, AddAccountActivity.class);
+        startActivity(intent);
     }
 
     @Override
