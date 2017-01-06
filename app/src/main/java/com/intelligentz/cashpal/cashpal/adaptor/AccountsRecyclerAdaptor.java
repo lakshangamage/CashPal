@@ -56,15 +56,10 @@ public class AccountsRecyclerAdaptor extends RecyclerView.Adapter<AccountsRecycl
 
         if (newAccount.getSubAccoutList() != null && !newAccount.getSubAccoutList().isEmpty()) {
             ArrayList<String> subAccountList = newAccount.getSubAccoutList();
-            for (int i=0; i<subAccountList.size(); i++) {
-                if (Account.getCurrentActiveSubAccountList().contains(subAccountList.get(i))) {
-                    Account.setCurrentAccount(newAccount);
-                    Account.setCurrentSubAccountIndex(i);
-                    activity.switchAccount();
-                    return;
-                }
-            }
-            activity.logInExistingAccount(position);
+                Account.setCurrentAccount(newAccount);
+                Account.setCurrentSubAccountIndex(0);
+                activity.switchAccount();
+                return;
         } else {
             String msg = String.format(Strings.getNoAccountRegisteredMessage(),
                     newAccount.getAccountName());

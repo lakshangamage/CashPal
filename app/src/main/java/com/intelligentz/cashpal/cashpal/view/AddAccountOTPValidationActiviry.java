@@ -46,13 +46,13 @@ public class AddAccountOTPValidationActiviry extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_account_otpvalidation_activiry);
+        setContentView(R.layout.activity_otpvalidation);
         context = this;
         imageView = (CircularImageView) findViewById(R.id.photoView);
-        imageView.setImageResource(Account.getCurrentAccount().getAccountIcon());
         mobileText = (MaterialEditText) findViewById(R.id.mobileTxt);
         mobileNumber = getIntent().getStringExtra("agent_mobile");
         selectedAccount = getIntent().getIntExtra("selectedAccount",0);
+        imageView.setImageResource(Account.accountDetailList.get(selectedAccount).getAccountIcon());
         mobileText.setText(mobileNumber);
         mobileText.setHint(Strings.getMobileTextHint());
         mobileText.setEnabled(false);
@@ -112,26 +112,20 @@ public class AddAccountOTPValidationActiviry extends AppCompatActivity {
             StringEntity entity = new StringEntity(jsonParams.toString());
             HttpClient.post(this, Account.getCurrentAccount().getOTP_VALIDATE_URL(), entity, HttpClient.CONTENT_TYPE_JSON, new TextHttpResponseHandler() {
 
-
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, String response) {
                     JsonObject jsonObject = new JsonParser().parse(response).getAsJsonObject();
                     if (jsonObject.get("authenticated").getAsBoolean()) {
                         sweetAlertDialog.dismissWithAnimation();
                         AccountDetail account = Account.accountDetailList.get(selectedAccount);
-                        if (!account.getSubAccoutList().contains(mobileNumber)){
-                            account.getSubAccoutList().add(mobileNumber);
-                            Account.setCurrentSubAccountIndex(account.getSubAccoutList().size()-1);
-                            SharedPreferences mPrefs = context.getSharedPreferences(account.getAccount_id(), Context.MODE_PRIVATE);
-                            SharedPreferences.Editor editor = mPrefs.edit();
-                            Gson gson = new Gson();
-                            String json = gson.toJson(account.getSubAccoutList());
-                            editor.putString(Account.SUB_ACCOUNT_IDENTIFIER, json);
-                            editor.commit();
-                        } else {
-                            Account.setCurrentSubAccountIndex(account.getSubAccoutList().indexOf(mobileNumber));
-                        }
-                        Account.getCurrentActiveSubAccountList().add(mobileNumber);
+                        account.getSubAccoutList().add(mobileNumber);
+                        Account.setCurrentSubAccountIndex(account.getSubAccoutList().size()-1);
+                        SharedPreferences mPrefs = context.getSharedPreferences(account.getAccount_id(), Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = mPrefs.edit();
+                        Gson gson = new Gson();
+                        String json = gson.toJson(account.getSubAccoutList());
+                        editor.putString(Account.SUB_ACCOUNT_IDENTIFIER, json);
+                        editor.commit();
                         Account.setCurrentAccount(account);
                         Account.isAccountChanged = true;
                         finish();

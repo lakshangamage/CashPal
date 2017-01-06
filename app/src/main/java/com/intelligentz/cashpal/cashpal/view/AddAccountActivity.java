@@ -88,8 +88,7 @@ public class AddAccountActivity extends AppCompatActivity implements AdapterView
                 sDialog.dismissWithAnimation();
             }
         };
-        if (Account.getCurrentActiveSubAccountList().contains(mobileTxt.getText().toString())
-                || Account.accountDetailList.get(selectedAccount).getSubAccoutList().contains(mobileTxt.getText().toString())) {
+        if (Account.accountDetailList.get(selectedAccount).getSubAccoutList().contains(mobileTxt.getText().toString())) {
             String msg = Strings.getAlreadyLoggedInMessage();
             NiftyNotificationView.build(this, msg, Effects.thumbSlider,R.id.mLyout)
                     .setIcon(R.drawable.cashpal_icon).show();

@@ -21,7 +21,7 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        //loadAccounts();
+        loadAccounts();
         SharedPreferences mPrefs = getSharedPreferences("cashpal.language", Context.MODE_PRIVATE);
         String language = mPrefs.getString("language", null);
         if (language == null) {
@@ -34,14 +34,22 @@ public class SplashActivity extends AppCompatActivity {
             } else {
                 Strings.Sinhala.setLanguage();
             }
-            Intent intent = new Intent(this, LogInActivity.class);
+
+            Intent intent;
+            if (Account.getCurrentAccount().getSubAccoutList() != null &&
+                    !Account.getCurrentAccount().getSubAccoutList().isEmpty()) {
+                Account.setCurrentSubAccountIndex(0);
+                intent = new Intent(this, MainActivity.class);
+            } else {
+                intent = new Intent(this, LogInActivity.class);
+            }
             startActivity(intent);
             finish();
         }
     }
 
     private void loadAccounts() {
-        for (int i = 0; i< Account.accountDetailList.size(); i++) {
+        for (int i=0; i<Account.accountDetailList.size(); i++) {
             AccountDetail acc = Account.accountDetailList.get(i);
             SharedPreferences mPrefs = getSharedPreferences(acc.getAccount_id(), Context.MODE_PRIVATE);
             Gson gson = new Gson();
@@ -53,34 +61,56 @@ public class SplashActivity extends AppCompatActivity {
                     for (String id : persistedList) {
                         acc.addSubAccountToList(id);
                     }
+                    Account.setCurrentAccount(acc);
                 }
             }
-            Account.setCurrentAccount(acc);
         }
-        AccountDetail account = Account.getCurrentAccount();
-        String mobileNumber = "0773472649";
-        if (!account.getSubAccoutList().contains(mobileNumber)) {
-            account.getSubAccoutList().add(mobileNumber);
-            account.getSubAccoutList().add("0771560046");
-            account.getSubAccoutList().add("0771560046");
-            account.getSubAccoutList().add("0771560046");
-            account.getSubAccoutList().add("0771560046");
-            account.getSubAccoutList().add("0771560046");
-            account.getSubAccoutList().add("0771560046");
-            account.getSubAccoutList().add("0771560046");
-            account.getSubAccoutList().add("0771560046");
-            account.getSubAccoutList().add("0771560046");
-            account.getSubAccoutList().add("0771560046");
-            account.getSubAccoutList().add("0771560046");
-            account.getSubAccoutList().add("0771560046");
-            account.getSubAccoutList().add("0771560046");
-            Account.setCurrentSubAccountIndex(0);
-        } else {
-            Account.setCurrentSubAccountIndex(account.getSubAccoutList().indexOf(mobileNumber));
+        if (Account.getCurrentAccount() == null) {
+            Account.setCurrentAccount(Account.accountDetailList.get(1));
         }
-        Account.getCurrentActiveSubAccountList().add(mobileNumber);
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-        finish();
     }
+
+//    private void loadAccounts() {
+//        for (int i = 0; i< Account.accountDetailList.size(); i++) {
+//            AccountDetail acc = Account.accountDetailList.get(i);
+//            SharedPreferences mPrefs = getSharedPreferences(acc.getAccount_id(), Context.MODE_PRIVATE);
+//            Gson gson = new Gson();
+//            String json = mPrefs.getString(Account.SUB_ACCOUNT_IDENTIFIER, null);
+//            if (json != null && !json.isEmpty()) {
+//                ArrayList<String> persistedList = gson.fromJson(json, ArrayList.class);
+//                if (persistedList != null && !persistedList.isEmpty()) {
+//                    acc.getSubAccoutList().clear();
+//                    for (String id : persistedList) {
+//                        acc.addSubAccountToList(id);
+//                    }
+//                }
+//            }
+//            Account.setCurrentAccount(acc);
+//        }
+//        AccountDetail account = Account.getCurrentAccount();
+//        String mobileNumber = "0773472649";
+//        if (!account.getSubAccoutList().contains(mobileNumber)) {
+//            account.getSubAccoutList().add(mobileNumber);
+//            account.getSubAccoutList().add("0771560046");
+//            account.getSubAccoutList().add("0771560046");
+//            account.getSubAccoutList().add("0771560046");
+//            account.getSubAccoutList().add("0771560046");
+//            account.getSubAccoutList().add("0771560046");
+//            account.getSubAccoutList().add("0771560046");
+//            account.getSubAccoutList().add("0771560046");
+//            account.getSubAccoutList().add("0771560046");
+//            account.getSubAccoutList().add("0771560046");
+//            account.getSubAccoutList().add("0771560046");
+//            account.getSubAccoutList().add("0771560046");
+//            account.getSubAccoutList().add("0771560046");
+//            account.getSubAccoutList().add("0771560046");
+//            Account.setCurrentSubAccountIndex(0);
+//        } else {
+//            Account.setCurrentSubAccountIndex(account.getSubAccoutList().indexOf(mobileNumber));
+//        }
+//        Account.getCurrentActiveSubAccountList().add(mobileNumber);
+//        Intent intent = new Intent(this, MainActivity.class);
+//        startActivity(intent);
+//        finish();
+//    }
 }

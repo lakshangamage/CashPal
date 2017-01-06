@@ -45,7 +45,6 @@ public class LogInActivity extends AppCompatActivity implements AdapterView.OnIt
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         context = this;
         accountSpinner = (Spinner) findViewById(R.id.spinner);
         accountSpinner.setAdapter(new AccountSpinnerAdaptor(this));
@@ -64,26 +63,8 @@ public class LogInActivity extends AppCompatActivity implements AdapterView.OnIt
         Util.configureRippleView(rippleView,listener);
         loginBtn = (Button) findViewById(R.id.loginBtn);
         loginBtn.setText(Strings.getLogInText());
-        loadAccounts();
     }
-    private void loadAccounts() {
-        for (int i=0; i<Account.accountDetailList.size(); i++) {
-            AccountDetail acc = Account.accountDetailList.get(i);
-            SharedPreferences mPrefs = context.getSharedPreferences(acc.getAccount_id(), Context.MODE_PRIVATE);
-            Gson gson = new Gson();
-            String json = mPrefs.getString(Account.SUB_ACCOUNT_IDENTIFIER, null);
-            if (json != null && !json.isEmpty()) {
-                ArrayList<String> persistedList = gson.fromJson(json, ArrayList.class);
-                if (persistedList != null && !persistedList.isEmpty()) {
-                    acc.getSubAccoutList().clear();
-                    for (String id : persistedList) {
-                        acc.addSubAccountToList(id);
-                    }
-                }
-            }
-            Account.setCurrentAccount(acc);
-        }
-    }
+
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         Account.setCurrentAccount(Account.accountDetailList.get(i));

@@ -125,32 +125,7 @@ public class MainActivity extends AppCompatActivity implements MenuItem.OnMenuIt
         actionBarDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.drawer_open,R.string.drawer_close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         configureAccountRecyclerView();
-
-        if (Account.getCurrentAccount() != null) {
-            AccountDetail currentAccountDetail = Account.getCurrentAccount();
-            imageView.setImageResource(currentAccountDetail.getAccountIcon());
-            headeraccountname.setText(currentAccountDetail.getAccountName());
-            ArrayList<String> subAccounts = currentAccountDetail.getSubAccoutList();
-            if (subAccounts != null && !subAccounts.isEmpty()) {
-                headersubaccountid.setText(subAccounts.get(
-                        Account.getCurrentSubAccountIndex()));
-                drawerMenu = navigationView.getMenu();
-                accountMenu = drawerMenu.addSubMenu(R.id.menugroup, 99, 0, "Accounts");
-                //accountMenu.setHeaderIcon(R.drawable.cashpal_icon);
-                accountMenu.setIcon(R.drawable.account);
-                for (int i = 0; i< subAccounts.size(); i++) {
-                    MenuItem menuItem = accountMenu.add(R.id.menugroup, i, i, subAccounts.get(i)).setIcon(R.drawable.account);
-                    menuItem.setOnMenuItemClickListener(this);
-                    if (Account.getCurrentActiveSubAccountList().contains(subAccounts.get(i))) {
-                        menuItem.setIcon(R.drawable.loggedin_account);
-                    }else{
-                        menuItem.setIcon(R.drawable.loggedout_account);
-                    }
-                }
-            }
-        }
-
-
+        switchAccount();
     }
 
     private void configureAccountRecyclerView(){
@@ -198,35 +173,34 @@ public class MainActivity extends AppCompatActivity implements MenuItem.OnMenuIt
         imageView.setImageResource(currentAccountDetail.getAccountIcon());
         headeraccountname.setText(currentAccountDetail.getAccountName());
         ArrayList<String> subAccounts = currentAccountDetail.getSubAccoutList();
+        if (accountMenu == null) {
+            accountMenu = navigationView.getMenu().addSubMenu(R.id.menugroup, Menu.NONE, 0, "Accounts" );
+
+        }
         if (subAccounts != null && !subAccounts.isEmpty()) {
             headersubaccountid.setText(subAccounts.get(
                     Account.getCurrentSubAccountIndex()));
             drawerMenu = navigationView.getMenu();
+
             //accountMenu.setHeaderIcon(R.drawable.cashpal_icon);
             accountMenu.clear();
             for (int i = 0; i< subAccounts.size(); i++) {
-                MenuItem menuItem = accountMenu.add(R.id.menugroup, i, i, subAccounts.get(i)).setIcon(R.drawable.account);
-                if (Account.getCurrentActiveSubAccountList().contains(subAccounts.get(i))) {
-                    menuItem.setIcon(R.drawable.loggedin_account);
-                }else{
-                    menuItem.setIcon(R.drawable.loggedout_account);
-                }
+                MenuItem menuItem = accountMenu.add(R.id.menugroup, i, i, subAccounts.get(i));
+                menuItem.setIcon(R.drawable.loggedin_account);
+                menuItem.setOnMenuItemClickListener(this);
             }
         }
         accountAdapter.changeAccount();
     }
-
-    public void logInExistingAccount(int accountIndex) {
-        Intent intent = new Intent(this, SwitchAccountLogInActivity.class);
-        intent.putExtra("selectedAccount", accountIndex);
-        startActivity(intent);
+    private void switchSubAccount(){
+        headersubaccountid.setText(Account.getCurrentAccount().getSubAccoutList().get(
+                Account.getCurrentSubAccountIndex()));
     }
-
     @Override
     public boolean onMenuItemClick(MenuItem menuItem) {
-        Intent intent = new Intent(this, AddAccountOTPValidationActiviry.class);
-        intent.putExtra("agent_mobile",menuItem.getTitle());
-        intent.putExtra("selectedAccount", Account.accountDetailList.indexOf(Account.getCurrentAccount()));
+        Account.setCurrentSubAccountIndex(Account.getCurrentAccount().getSubAccoutList().indexOf(menuItem.getTitle()));
+        switchSubAccount();
         return false;
     }
+
 }

@@ -119,20 +119,16 @@ public class OTPValidationActivity extends AppCompatActivity {
                     if (jsonObject.get("authenticated").getAsBoolean()) {
                         sweetAlertDialog.dismissWithAnimation();
                         AccountDetail account = Account.getCurrentAccount();
-                        if (!account.getSubAccoutList().contains(mobileNumber)) {
-                            account.getSubAccoutList().add(mobileNumber);
-                            Account.setCurrentSubAccountIndex(account.getSubAccoutList().size()-1);
-                            SharedPreferences mPrefs = context.getSharedPreferences(account.getAccount_id(), Context.MODE_PRIVATE);
-                            SharedPreferences.Editor editor = mPrefs.edit();
-                            Gson gson = new Gson();
-                            String json = gson.toJson(account.getSubAccoutList());
-                            editor.putString(Account.SUB_ACCOUNT_IDENTIFIER, json);
-                            editor.commit();
-                        } else {
-                            Account.setCurrentSubAccountIndex(account.getSubAccoutList().indexOf(mobileNumber));
-                        }
-                        Account.getCurrentActiveSubAccountList().add(mobileNumber);
+                        account.getSubAccoutList().add(mobileNumber);
+                        Account.setCurrentSubAccountIndex(0);
+                        SharedPreferences mPrefs = context.getSharedPreferences(account.getAccount_id(), Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = mPrefs.edit();
+                        Gson gson = new Gson();
+                        String json = gson.toJson(account.getSubAccoutList());
+                        editor.putString(Account.SUB_ACCOUNT_IDENTIFIER, json);
+                        editor.commit();
                         Intent intent = new Intent(context, MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         finish();
                     } else {
